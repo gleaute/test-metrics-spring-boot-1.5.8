@@ -16,4 +16,4 @@ run
 
 check
 -----
-curl http://localhost:8080/metrics
+curl -u actuator:actuator http://localhost:8080/metrics
