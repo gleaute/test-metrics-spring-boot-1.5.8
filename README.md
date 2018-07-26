@@ -8,11 +8,11 @@ To have better metrics on spring web mvc in /metrics endpoint :
 
 run
 ---
-mvn spring-boot:run
-curl http://localhost:8080/user/1
-curl http://localhost:8080/user/2
-curl http://localhost:8080/users
-curl http://localhost:8080/blabla
+* mvn spring-boot:run
+* curl http://localhost:8080/user/1
+* curl http://localhost:8080/user/2
+* curl http://localhost:8080/users
+* curl http://localhost:8080/blabla
 
 check
 -----
