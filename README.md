@@ -3,8 +3,8 @@
 purpose
 -------
 To have better metrics on spring web mvc in /metrics endpoint :
-* count by http method/endpoint
-* time sum in ms by http method/endpoint/code
+* count by http method/endpoint/code
+* time sum in ms by http method/endpoint
 
 run
 ---
