@@ -1,4 +1,4 @@
-package com.gleaute.testmetricsspringboot1_5_8;
+package com.gleaute.metrics;
 
 import org.springframework.boot.actuate.autoconfigure.ExportMetricReader;
 import org.springframework.boot.actuate.metrics.CounterService;

@@ -1,4 +1,4 @@
-package com.gleaute.testmetricsspringboot1_5_8;
+package com.gleaute.metrics;
 
 import javax.servlet.http.HttpServletRequest;
 
