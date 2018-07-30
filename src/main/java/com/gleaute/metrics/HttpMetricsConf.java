@@ -1,8 +1,11 @@
 package com.gleaute.metrics;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.springframework.boot.actuate.autoconfigure.ExportMetricReader;
 import org.springframework.boot.actuate.metrics.CounterService;
 import org.springframework.boot.actuate.metrics.GaugeService;
+import org.springframework.boot.actuate.metrics.buffer.BufferCounterService;
 import org.springframework.boot.actuate.metrics.buffer.BufferMetricReader;
 import org.springframework.boot.actuate.metrics.buffer.CounterBuffers;
 import org.springframework.boot.actuate.metrics.buffer.GaugeBuffers;
@@ -24,11 +27,18 @@ public class HttpMetricsConf {
 	}
 
 	@Bean
-	public MetricsService metricsService(CounterBuffers writer) {
-		return new MetricsService(writer);
+	public CounterService counterService(CounterBuffers buffers) {
+		return new BufferCounterService(buffers);
 	}
 
-	class MetricsService implements GaugeService, CounterService {
+	@Bean
+	public GaugeService gaugeService(CounterBuffers buffers) {
+		return new MetricsService(buffers);
+	}
+
+	class MetricsService implements GaugeService {
+
+		private final ConcurrentHashMap<String, String> names = new ConcurrentHashMap<String, String>();
 
 		private final CounterBuffers buffers;
 
@@ -37,23 +47,18 @@ public class HttpMetricsConf {
 		}
 
 		@Override
-		public void increment(String metricName) {
-			this.buffers.increment("http." + metricName, 1L);
-		}
-
-		@Override
-		public void decrement(String metricName) {
-			// nothing
-		}
-
-		@Override
-		public void reset(String metricName) {
-			// nothing
-		}
-
-		@Override
 		public void submit(String metricName, double value) {
-			this.buffers.increment("http." + metricName, (long) value);
+			this.buffers.increment(wrap(metricName), (long) value);
+		}
+
+		private String wrap(String metricName) {
+			String cached = this.names.get(metricName);
+			if (cached != null) {
+				return cached;
+			}
+			String name = "total." + metricName;
+			this.names.put(metricName, name);
+			return name;
 		}
 	}
 }
