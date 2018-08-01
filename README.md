@@ -9,11 +9,11 @@ To have better metrics on spring web mvc in /metrics endpoint :
 run
 ---
 * mvn spring-boot:run
-* curl http://localhost:8080/user/1
-* curl http://localhost:8080/user/2
-* curl http://localhost:8080/users
-* curl http://localhost:8080/blabla
+* curl -u api:api http://localhost:8080/user/1
+* curl -u api:api http://localhost:8080/user/2
+* curl -u api:api http://localhost:8080/users
+* curl -u api:api http://localhost:8080/blabla
 
 check
 -----
-curl -u actuator:actuator http://localhost:8080/metrics
+curl http://localhost:8090/metrics
